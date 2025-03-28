@@ -1,5 +1,7 @@
 import os
 import shutil
+import humanize
+
 CATEGORIES = {
     "Documents": [".pdf", ".docx", ".txt", ".xlsx"],
     "Images": [".jpg", ".png", ".gif"],
@@ -7,6 +9,7 @@ CATEGORIES = {
     "Videos": [".mp4", ".mov"],
 }
 TARGET_DIR = "C:/Users/YourName/Downloads"
+
 def create_category_folders():
     for category in CATEGORIES:
         folder_path = os.path.join(TARGET_DIR, category)
@@ -16,14 +19,12 @@ def create_category_folders():
         else:
             print(f"Folder already exists: {folder_path}")
 
-
 def get_file_category(file_extension):
     # Find which category this file belongs to
     for category, extensions in CATEGORIES.items():
         if file_extension in extensions:
             return category
     return None  # If no match found
-
 
 def organize_files():
     create_category_folders()
@@ -49,7 +50,7 @@ def organize_files():
                 print(f"File already exists. Renaming to: {new_filename}")
             
             shutil.move(filepath, dest_path)
-            print(f"Moved '{filename}' to '{category}'")
+            print(f"Moved '{filename}' to '{category}' (Size: {humanize.naturalsize(os.path.getsize(dest_path))})")
         else:
             print(f"Unknown file type: '{filename}' — leaving in place for now.")
 
