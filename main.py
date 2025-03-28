@@ -56,4 +56,4 @@ def organize_files():
 if __name__ == "__main__":
     print("Starting file organization. This might take a moment...")
     organize_files()
-    print("Organization complete. 🎉")
+    print("Organization complete.")
