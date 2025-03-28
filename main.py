@@ -1,6 +1,5 @@
 import os
 import shutil
-import humanize
 
 CATEGORIES = {
     "Documents": [".pdf", ".docx", ".txt", ".xlsx"],
@@ -19,12 +18,13 @@ def create_category_folders():
         else:
             print(f"Folder already exists: {folder_path}")
 
+
 def get_file_category(file_extension):
-    # Find which category this file belongs to
     for category, extensions in CATEGORIES.items():
         if file_extension in extensions:
             return category
-    return None  # If no match found
+    return None  
+
 
 def organize_files():
     create_category_folders()
@@ -35,14 +35,11 @@ def organize_files():
         _, ext = os.path.splitext(filename)
         ext = ext.lower()
         category = get_file_category(ext)
-
         if category:
             dest_path = os.path.join(TARGET_DIR, category, filename)
-            
             if os.path.exists(dest_path):
                 base_name, extension = os.path.splitext(filename)
                 counter = 1
-                
                 while os.path.exists(dest_path):
                     new_filename = f"{base_name}_{counter}{extension}"
                     dest_path = os.path.join(TARGET_DIR, category, new_filename)
@@ -50,7 +47,7 @@ def organize_files():
                 print(f"File already exists. Renaming to: {new_filename}")
             
             shutil.move(filepath, dest_path)
-            print(f"Moved '{filename}' to '{category}' (Size: {humanize.naturalsize(os.path.getsize(dest_path))})")
+            print(f"Moved '{filename}' to '{category}'")
         else:
             print(f"Unknown file type: '{filename}' — leaving in place for now.")
 
